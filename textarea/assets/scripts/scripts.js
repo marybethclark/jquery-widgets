@@ -1,41 +1,58 @@
-// when a key is pressed in the text box, run this function
-// I TYPED IN THE (COMMENTED OUT) CODE BELOW,copying it from http://stackoverflow.com/questions/5292235/max-characters-in-textarea-with-jquery,
-// BUT I MUST HAVE A TYPO, BECAUSE IT DOESN'T WORK.
-// LINE 16 IS WHAT I COPIIED/PASTED SO IT WOULD WORK.
-// $("textarea").keypress(function(e) {
-//   var tval = $("textarea").val(),
-//     tlength = tval.length,
-//     set = 10,
-//     remain = parseInt(set - tlength);
-//   $("p").text(remain);
-//   if (remain <= 0 && e.which !== 0 && e.charCode !== 0){
-//     $("textarea").val((tval).substring(0,tlength - 1))
-//   }
-// })
-// Run the following function when a user types in the textbox.
-$('textarea').keypress(function(e) {
-  // set the value of tval to be the value of textarea
-    var tval = $('textarea').val(),
-    // set the value of tlength to be the length of tval(which is textarea)
-        tlength = tval.length,
-        // this 10 has to do with the parseInt function, but I don't understand yet.
-        set = 10,
-        remain = parseInt(set - tlength);
-        // look at the paragraph and return the text from inside it
-    $('p').text(remain);
-    // if the charaters remaining(?) are less than or equal to zero and e.which(??) is
-    // equal to zero and e.charCode (??)is equal to zero then do the following
-    if (remain <= 0 && e.which !== 0 && e.charCode !== 0) {
-      // look at the textbox and ??? subtract 1 from the tlength (see line 20)
-        $('textarea').val((tval).substring(0, tlength - 1))
-    }
-})
+$( function () {
+  "use strict";
+// code below from instructions at http://geoffmuskett.com/really-simple-jquery-character-countdown-in-textarea/
 
-// THIS LOOKS POTENTIALLY PROMISING, BUT I HAVE TO SLEEP NOW.
-// $('textarea').keypress(function(){
+var maxLength = 25;
+// for the textarea element, run the following function after a keyboard key pops back up.  the length variable is assigned the value of the length of how many characters are entered into the textarea. Change the value of length to now be the maxlength (25) minus how many characters are entered. In the chars id location in the html, add text showing the current length value.
+$('textarea').keyup(function(){
+  var length = $(this).val().length;
+
+  var length = maxLength - length;
+  $('#chars').text (length);
+});
+// holy crap!!  Adding another set of }); made the program work!  That was the problem?????
+});
+
+
+
+
+// unused possible code source: http://www.mkyong.com/jquery/add-maxlength-on-textarea-using-jquery/
+  // $(document).ready( function () {
+  	// maxLength = $("textarea#comment").attr("maxlength");
+    //       $("textarea#comment").after("<div><span id='remainingLengthTempId'>"
+    //                 + maxLength + "</span> remaining</div>");
+    //
+    //       $("textarea#comment").bind("keyup change", function(){checkMaxLength(this.id,  maxLength); } )
+    //
+    //   });
+    //
+    //   function checkMaxLength(textareaID, maxLength){
+    //
+    //       currentLengthInTextarea = $("#"+textareaID).val().length;
+    //       $(remainingLengthTempId).text(parseInt(maxLength) - parseInt(currentLengthInTextarea));
+    //
+  	// 	if (currentLengthInTextarea > (maxLength)) {
+    //
+  	// 		// Trim the field current length over the maxlength.
+  	// 		$("textarea#comment").val($("textarea#comment").val().slice(0, maxLength));
+  	// 		$(remainingLengthTempId).text(0);
+    //
+  	// 	}
+    //   }
+
+
+
+
+
+// code below from http://that-matt.com/2008/07/05/textarea-maxlength-with-jquery.html
+//   $(document).ready(function(){
+//     $('textarea[maxlength]').keyup(function(){
+//         var max = parseInt($(this).attr(’maxlength’));
+//         // line 6 above: Uncaught SyntaxError: Invalid or unexpected token
+//         if($(this).val().length > max){
+//             $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+//         }
 //
-//     if(this.value.length > 10){
-//         return false;
-//     }
-//     $("#remainingC").html("Remaining characters : " +(10 - this.value.length));
-// });​
+//         $(this).parent().find('.charsRemaining').html('You have ' + (max - $(this).val().length) + ' characters remaining');
+//     });
+// });
